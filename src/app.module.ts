@@ -5,6 +5,7 @@ import { DatabaseConnectionService } from "./shared/services/database-connection
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoModule } from './todo/todo.module';
 import { VendorModule } from './vendor/vendor.module';
+import { StyleModule } from './style/style.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { VendorModule } from './vendor/vendor.module';
     }),
     TodoModule,
     VendorModule,
+    StyleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
