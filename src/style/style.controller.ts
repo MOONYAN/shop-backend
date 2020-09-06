@@ -1,7 +1,9 @@
 import { CreateStyleDTO } from './dto/create-style.dto';
 import { StyleService } from './style.service';
 import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('style')
 @Controller('style')
 export class StyleController {
 
