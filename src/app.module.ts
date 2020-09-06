@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoModule } from './todo/todo.module';
 import { VendorModule } from './vendor/vendor.module';
 import { StyleModule } from './style/style.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { StyleModule } from './style/style.module';
     TodoModule,
     VendorModule,
     StyleModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
