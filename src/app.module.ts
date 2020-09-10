@@ -7,6 +7,8 @@ import { TodoModule } from './todo/todo.module';
 import { VendorModule } from './vendor/vendor.module';
 import { StyleModule } from './style/style.module';
 import { ProductModule } from './product/product.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { ProductModule } from './product/product.module';
     VendorModule,
     StyleModule,
     ProductModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
