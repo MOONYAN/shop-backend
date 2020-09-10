@@ -13,11 +13,15 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@CurrentUser() validUser: ValidUser) {
-    return this.authService.generateCredencial(validUser);    
+    return this.authService.generateCredencial(validUser);
   }
 
   @Post('signup')
   async signup(@Body() dto: SignupDto) {
-    return this.authService.signup(dto);
+    try {
+      return await this.authService.signup(dto);
+    } catch ( err ) {
+      return err;
+    }
   }
 }

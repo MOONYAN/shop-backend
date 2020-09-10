@@ -24,18 +24,28 @@ export class AuthService {
     }
 
     async signup(dto: SignupDto): Promise<ValidUser> {
+        if (await this.userService.exist(dto.email)) {
+            throw `try to sign up exist user: ${dto.email} !`;
+        }
+        return this.createValidUser(dto);
+    }
+
+    private async createValidUser(dto: SignupDto): Promise<ValidUser> {
+
         const creatUserDto: CreateUserDto = {
             email: dto.email,
             password: await this.hashService.hashCode(dto.password)
         };
-        const user = await this.userService.create(creatUserDto);        
+
+        const user = await this.userService.create(creatUserDto);
+
         return {
             id: user.id,
             email: user.email
         } as ValidUser;
     }
 
-    async generateCredencial(dto: ValidUser): Promise<Credencial> {
+    generateCredencial(dto: ValidUser): Credencial {
 
         const payload: Payload = {
             sub: dto.id,
