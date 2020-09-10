@@ -6,6 +6,7 @@ import { UserModule } from './../user/user.module';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local/local.strategy';
 import { JwtStrategy } from './jwt/jwt.strategy';
+import { AuthController } from './auth.controller';
 import { HashService } from './hash.service';
 
 
@@ -17,7 +18,10 @@ import { HashService } from './hash.service';
   providers: [
     AuthService,
     HashService,
+    LocalStrategy,
+    JwtStrategy,
     { provide: 'HASH_ROUND', useValue: hashConstant.hashRound }],
   exports: [AuthService],
+  controllers: [AuthController]
 })
 export class AuthModule { }
