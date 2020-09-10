@@ -1,4 +1,4 @@
-import { jwtConstant } from './constants';
+import { jwtConstant, hashConstant } from './constants';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -6,6 +6,7 @@ import { UserModule } from './../user/user.module';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local/local.strategy';
 import { JwtStrategy } from './jwt/jwt.strategy';
+import { HashService } from './hash.service';
 
 
 @Module({
@@ -13,7 +14,10 @@ import { JwtStrategy } from './jwt/jwt.strategy';
     secret: jwtConstant.secret,
     signOptions: { expiresIn: jwtConstant.expiresIn }
   })],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  exports: [AuthService]
+  providers: [
+    AuthService,
+    HashService,
+    { provide: 'HASH_ROUND', useValue: hashConstant.hashRound }],
+  exports: [AuthService],
 })
 export class AuthModule { }
