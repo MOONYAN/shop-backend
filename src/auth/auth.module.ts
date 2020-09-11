@@ -1,5 +1,6 @@
+import { ConfigModule } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { JwtConfigService } from './jwt/jwt-config.service';
-import { hashConstant } from './constants';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -10,12 +11,14 @@ import { JwtStrategy } from './jwt/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { HashService } from './hash.service';
 
-
 @Module({
   imports: [
+    ConfigModule,
     UserModule,
     PassportModule,
     JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       useClass: JwtConfigService
     })
   ],
@@ -24,7 +27,13 @@ import { HashService } from './hash.service';
     HashService,
     LocalStrategy,
     JwtStrategy,
-    { provide: 'HASH_ROUND', useValue: hashConstant.hashRound }],
+    {
+      provide: 'HASH_ROUND',
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return configService.get<number>('HASH_ROUND');
+      }
+    }],
   exports: [AuthService],
   controllers: [AuthController]
 })
