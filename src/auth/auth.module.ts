@@ -1,4 +1,5 @@
-import { jwtConstant, hashConstant } from './constants';
+import { JwtConfigService } from './jwt/jwt-config.service';
+import { hashConstant } from './constants';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -11,10 +12,13 @@ import { HashService } from './hash.service';
 
 
 @Module({
-  imports: [UserModule, PassportModule, JwtModule.register({
-    secret: jwtConstant.secret,
-    signOptions: { expiresIn: jwtConstant.expiresIn }
-  })],
+  imports: [
+    UserModule,
+    PassportModule,
+    JwtModule.registerAsync({
+      useClass: JwtConfigService
+    })
+  ],
   providers: [
     AuthService,
     HashService,
