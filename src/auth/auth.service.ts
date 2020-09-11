@@ -1,9 +1,10 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { ValidUser } from './interface/valid-user.interface';
 import { UserEntity } from './../user/user.entity';
 import { CreateUserDto } from './../user/dto/create-user.dto';
 import { SignupDto } from './dto/signup.dto';
 import { Payload } from './jwt/payload.interface';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from "@nestjs/jwt";
 import { HashService } from './hash.service';
@@ -18,14 +19,18 @@ export class AuthService {
         private jwtService: JwtService) { }
 
     async validateUser(email: string, password: string): Promise<UserEntity> {
-        const user = await this.userService.find(email);
+        const user = await this.userService.findOneByEmail(email);
         const match = await this.hashService.compareCode(password, user.password);
-        return match ? user : null;
+        if (!match) {
+            throw new UnauthorizedException();
+        }
+        return user;
     }
 
     async signup(dto: SignupDto): Promise<ValidUser> {
-        if (await this.userService.exist(dto.email)) {
-            throw `try to sign up exist user: ${dto.email} !`;
+        const isExistUser = await this.userService.exist(dto.email);
+        if (isExistUser) {
+            throw new BadRequestException();
         }
         return this.createValidUser(dto);
     }

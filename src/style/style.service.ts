@@ -1,6 +1,6 @@
 import { CreateStyleDTO } from './dto/create-style.dto';
 import { StyleEntity } from './style.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 
@@ -16,7 +16,11 @@ export class StyleService {
     }
 
     async getOne(id:number):Promise<StyleEntity>{
-        return await this.repo.findOne(id);
+        const style = await this.repo.findOne(id);
+        if(style === undefined){
+            throw new BadRequestException();
+        }
+        return style;
     }
 
     async getMany():Promise<StyleEntity[]>{

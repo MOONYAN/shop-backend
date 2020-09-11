@@ -18,7 +18,7 @@ export class ProductController {
     @Get(':id')
     async getOne(@Param('id') id: number) {
 
-        return await this.service.getOne(id);
+        return this.service.getOne(id);
     }
 
     @Post()

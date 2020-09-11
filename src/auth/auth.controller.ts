@@ -18,10 +18,6 @@ export class AuthController {
 
   @Post('signup')
   async signup(@Body() dto: SignupDto) {
-    try {
-      return await this.authService.signup(dto);
-    } catch ( err ) {
-      return err;
-    }
+    return this.authService.signup(dto);
   }
 }
