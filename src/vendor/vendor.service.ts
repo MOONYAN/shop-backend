@@ -1,6 +1,6 @@
 import { VendorEntity } from './vendor.entity';
 import { CreateVendorDTO } from './dto/create-vendor.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 
@@ -16,7 +16,11 @@ export class VendorService {
     }
 
     async getOne(id: number): Promise<VendorEntity> {
-        return await this.repo.findOne(id);
+        const vendor = await this.repo.findOne(id);
+        if (vendor === undefined) {
+            throw new BadRequestException();
+        }
+        return vendor;
     }
 
     async getMany(): Promise<VendorEntity[]> {
