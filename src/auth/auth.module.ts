@@ -27,13 +27,7 @@ import { HashService } from './hash.service';
     HashService,
     LocalStrategy,
     JwtStrategy,
-    {
-      provide: 'HASH_ROUND',
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return configService.get<number>('HASH_ROUND');
-      }
-    }],
+  ],
   exports: [AuthService],
   controllers: [AuthController]
 })
