@@ -1,5 +1,4 @@
 import { ValidUser } from '../interface/valid-user.interface';
-import { jwtConstant } from '../constants';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from "@nestjs/common";
 import { ExtractJwt, Strategy } from 'passport-jwt';

@@ -1,14 +1,13 @@
-import { hashConstant } from './constants';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { hash, compare } from "bcrypt";
 
 @Injectable()
 export class HashService {
 
-    constructor(@Inject('HASH_ROUND') private hashRound: number) { }
+    private readonly HASH_ROUNDS: number = 10;
 
     async hashCode(plaintext: string): Promise<string> {
-        return hash(plaintext, this.hashRound);
+        return hash(plaintext, this.HASH_ROUNDS);
     }
 
     async compareCode(plaintext: string, code: string): Promise<boolean> {
