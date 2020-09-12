@@ -35,4 +35,3 @@ services:
             DB: postgres
             JWT_SECRET: hardsecret
             JWT_EXPIRES_IN: 24h
-            HASH_ROUNDS: 10
