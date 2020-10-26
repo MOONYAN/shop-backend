@@ -11,6 +11,7 @@ import { StyleModule } from './style/style.module';
 import { ProductModule } from './product/product.module';
 import { AuthModule } from './auth/auth.module';
 import { DaoModule } from './dao/dao.module';
+import { AutoModule } from './auto/auto.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { DaoModule } from './dao/dao.module';
     StyleModule,
     ProductModule,
     AuthModule,
-    DaoModule
+    DaoModule,
+    AutoModule
   ],
   controllers: [AppController],
   providers: [AppService]
