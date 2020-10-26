@@ -1,11 +1,10 @@
+import { UserDao } from './../dao/user.dao';
 import { UnauthorizedException } from '@nestjs/common';
 import { ValidUser } from './interface/valid-user.interface';
-import { UserEntity } from './../user/user.entity';
-import { CreateUserDto } from './../user/dto/create-user.dto';
+import { UserEntity } from '../dao/user.entity';
 import { SignupDto } from './dto/signup.dto';
 import { Payload } from './jwt/payload.interface';
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
 import { JwtService } from "@nestjs/jwt";
 import { HashService } from './hash.service';
 import { Credencial } from './interface/credencial.interface';
@@ -14,12 +13,12 @@ import { Credencial } from './interface/credencial.interface';
 export class AuthService {
 
     constructor(
+        private userDao: UserDao,
         private hashService: HashService,
-        private userService: UserService,
         private jwtService: JwtService) { }
 
     async validateUser(email: string, password: string): Promise<UserEntity> {
-        const user = await this.userService.findOneByEmail(email);
+        const user = await this.userDao.findOneByEmail(email);
         const match = await this.hashService.compareCode(password, user.password);
         if (!match) {
             throw new UnauthorizedException();
@@ -28,7 +27,7 @@ export class AuthService {
     }
 
     async signup(dto: SignupDto): Promise<ValidUser> {
-        const isExistUser = await this.userService.exist(dto.email);
+        const isExistUser = await this.userDao.exist(dto.email);
         if (isExistUser) {
             throw new BadRequestException();
         }
@@ -37,12 +36,8 @@ export class AuthService {
 
     private async createValidUser(dto: SignupDto): Promise<ValidUser> {
 
-        const creatUserDto: CreateUserDto = {
-            email: dto.email,
-            password: await this.hashService.hashCode(dto.password)
-        };
-
-        const user = await this.userService.create(creatUserDto);
+        const code = await this.hashService.hashCode(dto.password);
+        const user = await this.userDao.createOne(dto.email, code);
 
         return {
             id: user.id,
