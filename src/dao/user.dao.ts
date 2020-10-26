@@ -1,20 +1,19 @@
-import { CreateUserDto } from './dto/create-user.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserEntity } from './user.entity';
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
-export class UserService {
+export class UserDao {
 
     constructor(
         @InjectRepository(UserEntity)
         private repo: Repository<UserEntity>) { }
 
-    async create(dto: CreateUserDto): Promise<UserEntity> {
-        const user = this.repo.create();
-        user.email = dto.email;
-        user.password = dto.password;
+    async createOne(email: string, password: string): Promise<UserEntity> {
+        let user = this.repo.create();
+        user.email = email;
+        user.password = password;
         return await this.repo.save(user);
     }
 
@@ -35,7 +34,7 @@ export class UserService {
     }
 
     async exist(email: string): Promise<boolean> {
-        const users = await this.repo.find({ where: { email: email } });
-        return users.length > 0;
+        const count = await this.repo.count({ where: { email: email } });
+        return count > 0;
     }
 }

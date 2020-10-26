@@ -10,7 +10,7 @@ import { VendorModule } from './vendor/vendor.module';
 import { StyleModule } from './style/style.module';
 import { ProductModule } from './product/product.module';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+import { DaoModule } from './dao/dao.module';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { UserModule } from './user/user.module';
     StyleModule,
     ProductModule,
     AuthModule,
-    UserModule,
+    DaoModule
   ],
   controllers: [AppController],
   providers: [AppService]
