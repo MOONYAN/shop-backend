@@ -9,7 +9,7 @@ export class ProductEntity {
     id: number;
 
     @Column()
-    name: string;    
+    name: string;
 
     @Column()
     photo: string;
@@ -17,9 +17,9 @@ export class ProductEntity {
     @Column()
     price: number;
 
-    @ManyToOne(() => StyleEntity, style => style.id)
+    @ManyToOne(type => StyleEntity, style => style.products, { eager: true })
     style: StyleEntity;
 
-    @ManyToOne(() => VendorEntity, vendor => vendor.id)
+    @ManyToOne(type => VendorEntity, vendor => vendor.products, { eager: true })
     vendor: VendorEntity;
 }

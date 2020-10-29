@@ -38,7 +38,7 @@ export class ProductService {
     }
 
     async getOne(id: number): Promise<ProductEntity> {
-        const product = await this.repo.findOne(id, { relations: ['style', 'vendor'] });
+        const product = await this.repo.findOne(id);
         if(product === undefined){
             throw new BadRequestException()
         }
@@ -46,7 +46,7 @@ export class ProductService {
     }
 
     async getMany(): Promise<ProductEntity[]> {
-        return await this.repo.find({relations:['style', 'vendor']});
+        return await this.repo.find();
     }
 
     async deleteOne(id: number): Promise<DeleteResult> {
