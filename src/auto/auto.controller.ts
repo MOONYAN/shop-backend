@@ -1,12 +1,10 @@
 import { DeleteResult } from 'typeorm';
-import { JwtAuthGuard } from './../auth/jwt/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
-import { ValidAutoDto } from './interface/valid-auto.dto';
-import { Body, Controller, Get, Post, Param, UseGuards, Delete } from '@nestjs/common';
+import { ResAutoDto } from './interface/res-auto.dto';
+import { Body, Controller, Get, Post, Param, Delete } from '@nestjs/common';
 import { AutoService } from './auto.service';
 import { CreateAutoDto } from './dto/create-auto.dto';
 
-@UseGuards(JwtAuthGuard)
 @ApiTags('auto')
 @Controller('auto')
 export class AutoController {
@@ -14,17 +12,17 @@ export class AutoController {
     constructor(private autoService: AutoService) { }
 
     @Post()
-    createOne(@Body() dto: CreateAutoDto): Promise<ValidAutoDto> {
+    createOne(@Body() dto: CreateAutoDto): Promise<ResAutoDto> {
         return this.autoService.createOne(dto);
     }
 
     @Get(':id')
-    getOne(@Param('id') id: number): Promise<ValidAutoDto> {
+    getOne(@Param('id') id: number): Promise<ResAutoDto> {
         return this.autoService.getOne(id);
     }
 
     @Get()
-    getMany(): Promise<ValidAutoDto[]> {
+    getMany(): Promise<ResAutoDto[]> {
         return this.autoService.getMany();
     }
 

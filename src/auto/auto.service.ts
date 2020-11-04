@@ -1,6 +1,6 @@
 import { DeleteResult } from 'typeorm';
 import { AutoEntity } from './../dao/auto.entity';
-import { ValidAutoDto } from './interface/valid-auto.dto';
+import { ResAutoDto } from './interface/res-auto.dto';
 import { AutoDao } from './../dao/auto.dao';
 import { Injectable } from '@nestjs/common';
 import { CreateAutoDto } from './dto/create-auto.dto';
@@ -10,22 +10,22 @@ export class AutoService {
 
     constructor(private autoDao: AutoDao) { }
 
-    async createOne(dto: CreateAutoDto): Promise<ValidAutoDto> {
+    async createOne(dto: CreateAutoDto): Promise<ResAutoDto> {
 
         const auto = await this.autoDao.createOne(dto.name, dto.acc, dto.abs, dto.esp);
         return this.toDto(auto);
     }
 
-    async getOne(id: number): Promise<ValidAutoDto> {
+    async getOne(id: number): Promise<ResAutoDto> {
 
         const auto = await this.autoDao.getOne(id);
         return this.toDto(auto);
     }
 
-    async getMany(): Promise<ValidAutoDto[]> {
+    async getMany(): Promise<ResAutoDto[]> {
 
         const autos = await this.autoDao.getMany();
-        return autos.map<ValidAutoDto>(auto => this.toDto(auto));
+        return autos.map<ResAutoDto>(auto => this.toDto(auto));
     }
 
     async deleteOne(id: number): Promise<DeleteResult> {
@@ -33,7 +33,7 @@ export class AutoService {
         return await this.autoDao.deleteOne(id);
     }
 
-    private toDto(auto: AutoEntity): ValidAutoDto {
+    private toDto(auto: AutoEntity): ResAutoDto {
 
         return {
             id: auto.id,

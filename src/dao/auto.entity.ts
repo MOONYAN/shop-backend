@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PocketEntity } from './pocket.entity';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('autos')
+@Entity('auto')
 export class AutoEntity {
 
     @PrimaryGeneratedColumn()
@@ -17,6 +18,9 @@ export class AutoEntity {
 
     @Column()
     esp: boolean;
+
+    @ManyToMany(() => PocketEntity, pocket => pocket.autos)
+    pockets: PocketEntity[];
 
     @CreateDateColumn()
     create_at: Date;
