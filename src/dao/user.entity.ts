@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { PocketEntity } from './pocket.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from "typeorm";
 
-@Entity('users')
+@Entity('user')
 export class UserEntity {
 
     @PrimaryGeneratedColumn()
@@ -11,6 +12,10 @@ export class UserEntity {
 
     @Column()
     password: string;
+
+    @OneToOne(() => PocketEntity, { eager: true })
+    @JoinColumn()
+    pocket: PocketEntity;
 
     @CreateDateColumn()
     create_at: Date;
