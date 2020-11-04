@@ -12,7 +12,7 @@ export class AutoService {
 
     async createOne(dto: CreateAutoDto): Promise<ResAutoDto> {
 
-        const auto = await this.autoDao.createOne(dto.name, dto.acc, dto.abs, dto.esp);
+        const auto = await this.autoDao.createOne(dto.name, dto.photo, dto.acc, dto.abs);
         return this.toDto(auto);
     }
 
@@ -29,7 +29,7 @@ export class AutoService {
     }
 
     async deleteOne(id: number): Promise<DeleteResult> {
-        
+
         return await this.autoDao.deleteOne(id);
     }
 
@@ -38,9 +38,9 @@ export class AutoService {
         return {
             id: auto.id,
             name: auto.name,
+            photo: auto.photo,
             acc: auto.acc,
-            abs: auto.abs,
-            esp: auto.esp
+            abs: auto.abs
         }
     }
 }

@@ -48,9 +48,9 @@ export class PocketService {
         return {
             id: auto.id,
             name: auto.name,
+            photo: auto.photo,
             acc: auto.acc,
-            abs: auto.abs,
-            esp: auto.esp
+            abs: auto.abs
         }
     }
 }

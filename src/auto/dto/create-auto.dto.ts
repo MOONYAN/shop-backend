@@ -6,11 +6,11 @@ export class CreateAutoDto {
     readonly name: string;
 
     @ApiProperty()
+    readonly photo: string;
+
+    @ApiProperty()
     readonly acc: string;
 
     @ApiProperty()
     readonly abs: boolean;
-
-    @ApiProperty()
-    readonly esp: boolean;
 }

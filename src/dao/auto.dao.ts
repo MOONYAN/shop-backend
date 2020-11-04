@@ -10,11 +10,11 @@ export class AutoDao {
         @InjectRepository(AutoEntity)
         private repo: Repository<AutoEntity>) { }
 
-    async createOne(name: string, acc: string, abs: boolean, esp: boolean): Promise<AutoEntity> {
+    async createOne(name: string, photo: string, acc: string, abs: boolean): Promise<AutoEntity> {
         let auto: AutoEntity = this.repo.create();
         auto.name = name;
+        auto.photo = photo;
         auto.abs = abs;
-        auto.esp = esp;
         auto.acc = acc;
         return await this.repo.save(auto);
     }

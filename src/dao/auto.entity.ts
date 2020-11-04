@@ -11,13 +11,13 @@ export class AutoEntity {
     name: string;
 
     @Column()
+    photo: string;
+
+    @Column()
     acc: string;
 
     @Column()
     abs: boolean;
-
-    @Column()
-    esp: boolean;
 
     @ManyToMany(() => PocketEntity, pocket => pocket.autos)
     pockets: PocketEntity[];
