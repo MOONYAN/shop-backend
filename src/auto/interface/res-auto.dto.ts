@@ -1,4 +1,4 @@
-export interface ValidAutoDto {
+export interface ResAutoDto {
     
     readonly id: number;
 

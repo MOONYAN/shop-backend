@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { DaoModule } from './dao/dao.module';
 import { AutoModule } from './auto/auto.module';
+import { PocketModule } from './pocket/pocket.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { AutoModule } from './auto/auto.module';
     }),
     AuthModule,
     DaoModule,
-    AutoModule
+    AutoModule,
+    PocketModule
   ],
   controllers: [AppController],
   providers: [AppService]
