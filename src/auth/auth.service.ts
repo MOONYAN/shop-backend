@@ -53,6 +53,7 @@ export class AuthService {
         }
 
         const credencial: Credencial = {
+            email:dto.email,
             access_token: this.jwtService.sign(payload)
         }
         return credencial;
