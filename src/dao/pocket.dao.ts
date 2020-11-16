@@ -21,6 +21,7 @@ export class PocketDao {
         if (pocket === undefined) {
             throw new BadRequestException();
         }
+        pocket.autos = pocket.autos.filter(e => e.id != auto.id);
         pocket.autos.push(auto);
         return await this.repo.save(pocket);
     }
