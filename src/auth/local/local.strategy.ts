@@ -1,4 +1,4 @@
-import { UserEntity } from './../../user/user.entity';
+import { UserEntity } from '../../dao/user.entity';
 import { AuthService } from './../auth.service';
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";

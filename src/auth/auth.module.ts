@@ -1,10 +1,10 @@
+import { DaoModule } from './../dao/dao.module';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { JwtConfigService } from './jwt/jwt-config.service';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { UserModule } from './../user/user.module';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local/local.strategy';
 import { JwtStrategy } from './jwt/jwt.strategy';
@@ -13,8 +13,8 @@ import { HashService } from './hash.service';
 
 @Module({
   imports: [
+    DaoModule,
     ConfigModule,
-    UserModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
